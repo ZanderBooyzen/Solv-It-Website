@@ -44,6 +44,12 @@ export default {
       }
     }
 
+    if (url.pathname === '/api/visits') {
+      if (request.method !== 'GET') return json({ error: 'Method not allowed.' }, 405);
+      const counter = env.VISITOR_COUNTER.get(env.VISITOR_COUNTER.idFromName('site-wide'));
+      return counter.fetch('https://visitor-counter/increment');
+    }
+
     const assetResponse = await env.ASSETS.fetch(request);
     if (url.pathname === '/styles.css') {
       const headers = new Headers(assetResponse.headers);
@@ -64,4 +70,20 @@ function corsHeaders() {
 
 function escapeHtml(value) {
   return value.replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
+}
+
+export class VisitorCounter {
+  constructor(state) {
+    this.storage = state.storage;
+  }
+
+  async fetch() {
+    const count = await this.storage.transaction(async (transaction) => {
+      const nextCount = (await transaction.get('count') || 0) + 1;
+      await transaction.put('count', nextCount);
+      return nextCount;
+    });
+
+    return Response.json({ count }, { headers: { 'Cache-Control': 'no-store' } });
+  }
 }
