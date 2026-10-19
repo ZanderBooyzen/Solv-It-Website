@@ -339,7 +339,7 @@ body:not(:has(.homepage)) footer { margin-top:40px; padding-top:28px; border-top
 .home-hours { display:grid; grid-template-columns:minmax(220px,.7fr) minmax(0,1.3fr); gap:24px; align-items:center; margin:0 0 34px; padding:16px 20px; border:1px solid #dfe7e5; border-radius:16px; background:#f3f7f5; }
 .home-hours-top { margin:12px 0 14px; }
 .homepage main > .home-hours { display:none; }
-.home-hours h2 { margin:4px 0 4px; color:var(--ink); font-size:clamp(1.3rem,2vw,1.7rem); font-weight:800; letter-spacing:-.05em; }
+.home-hours h2 { margin:4px 0 4px; color:var(--ink); font-size:clamp(1rem,2.05vw,1.55rem); font-weight:800; letter-spacing:-.05em; white-space:nowrap; }
 .home-hours p { max-width:470px; margin:0 0 8px; color:#617383; font-size:.78rem; line-height:1.45; }
 .home-hours .eyebrow { color:var(--teal); font-weight:700; }
 .home-hours-list { display:flex; flex-wrap:wrap; gap:8px 18px; margin:0; }
