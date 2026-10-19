@@ -14,6 +14,18 @@
   window.addEventListener('resize', update);
   update();
 
+  const visitorCount = document.querySelector('[data-visitor-count]');
+  if (visitorCount) {
+    fetch('https://counterapi.com/api/solv-it.com/view/site-total', { cache: 'no-store' })
+      .then((response) => response.ok ? response.json() : null)
+      .then((data) => {
+        if (Number.isSafeInteger(data?.value) && data.value >= 0) {
+          visitorCount.textContent = data.value.toLocaleString();
+        }
+      })
+      .catch(() => {});
+  }
+
   const revealItems = document.querySelectorAll('.page-intro, .home-intro, .services-preview, .feature, .content-card, .contact-direct, .price-list, .pricing-note, .pricing-actions, .hero-copy, .hero-visual, .service-section, .split-section, .process-v2, .final-cta');
   revealItems.forEach((item, index) => {
     item.classList.add('reveal');

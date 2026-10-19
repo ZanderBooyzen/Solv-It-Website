@@ -16,11 +16,11 @@
 
   const visitorCount = document.querySelector('[data-visitor-count]');
   if (visitorCount) {
-    fetch('/api/visits', { cache: 'no-store' })
+    fetch('https://counterapi.com/api/solv-it.com/view/site-total', { cache: 'no-store' })
       .then((response) => response.ok ? response.json() : null)
       .then((data) => {
-        if (Number.isSafeInteger(data?.count) && data.count >= 0) {
-          visitorCount.textContent = data.count.toLocaleString();
+        if (Number.isSafeInteger(data?.value) && data.value >= 0) {
+          visitorCount.textContent = data.value.toLocaleString();
         }
       })
       .catch(() => {});
