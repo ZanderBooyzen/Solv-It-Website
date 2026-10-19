@@ -3,8 +3,16 @@
   "name": "the-flux-capacitor",
   "main": "./src/index.js",
   "compatibility_date": "2026-09-24",
+  "durable_objects": {
+    "bindings": [
+      { "name": "VISITOR_COUNTER", "class_name": "VisitorCounter" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["VisitorCounter"] }
+  ],
   "assets": {
-    "directory": ".",
+    "directory": "./dist",
     "binding": "ASSETS",
     "run_worker_first": true
   },

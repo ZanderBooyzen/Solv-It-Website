@@ -66,3 +66,21 @@ function escapeHtml(value) {
   return value.replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
 }
 
+// Keep this class exported because the production Worker has an existing
+// Durable Object namespace bound to it, even though the page now uses CounterAPI.
+export class VisitorCounter {
+  constructor(state) {
+    this.storage = state.storage;
+  }
+
+  async fetch() {
+    const count = await this.storage.transaction(async (transaction) => {
+      const nextCount = (await transaction.get('count') || 0) + 1;
+      await transaction.put('count', nextCount);
+      return nextCount;
+    });
+
+    return Response.json({ count }, { headers: { 'Cache-Control': 'no-store' } });
+  }
+}
+
